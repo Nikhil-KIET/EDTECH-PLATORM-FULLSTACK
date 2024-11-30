@@ -34,10 +34,11 @@ const otpSchema =new mongoose.Schema({
 
 async function sendVerificationemail(email,otp){
     try {
-        await sendMail("STUDY NOTION OTP",this.email,this.otp);
+        
+        await sendMail("STUDY NOTION OTP",email,otp);
         
     } catch (error) {
-        console.log(err)
+        console.log(error)
         
     }
 

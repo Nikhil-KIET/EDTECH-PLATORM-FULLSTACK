@@ -1,13 +1,14 @@
 const express=require("express");
-const { login, signup, changePass } = require("../Controllers/Auth");
+const { login, signup, changePass, sendOtp } = require("../Controllers/Auth");
 const {createCourse,getCourses,getDetails } = require("../Controllers/Course");
 const { createPay, verifySign } = require("../Controllers/CreatePay");
 const { reset } = require("../Controllers/ResetPassword");
-const { createProfile } = require("../Controllers/Profile");
+const { createProfile, updateUser } = require("../Controllers/Profile");
 const { createRating, avgRating } = require("../Controllers/Rating");
 const { createSection, updateSection, deleteSection } = require("../Controllers/Section");
 const { createSubsection, updateSubsection, deleteSubsection } = require("../Controllers/SubSection");
 const { createTag, getAllTags } = require("../Controllers/Tag");
+const { auth } = require("../Middlewares/auth");
 
 
 //debugging if any of the function giving undefined
@@ -26,7 +27,7 @@ router.post("/buyCourse",createPay)//chk
 router.get("/checkSign",verifySign)//chk
 router.put("/changePass",changePass)
 router.get("/resetPass",reset)
-router.post("/createProfile",createProfile)//chk
+router.post("/createProfile",auth,createProfile)//chk
 router.post("/createRating",createRating)//chk
 router.get("/avgRating",avgRating)
 router.post("/createSection",createSection)//chk
@@ -37,6 +38,8 @@ router.put("/updateSubs",updateSubsection)
 router.delete("/deleteSubs",deleteSubsection)
 router.post("/createTag",createTag)//chk
 router.get("/getTag",getAllTags)
+router.get("/sendOtp",sendOtp)
+router.put("/updatePic",auth,updateUser)
 
 
 module.exports=router

@@ -1,13 +1,17 @@
+const { default: mongoose } = require("mongoose");
 const Profile=require("../Models/Profile")
 const User=require("../Models/User")
+
+const fileupload=require("../Utils/Cloudinary")
 
 async function createProfile(req,res){
 
   try {
 
     const {name,contactNumber,about,dateOfBirth,gender}=req.body;
+    
 
-    const{userId}=req.user._id
+    const userId=req.user.id
 
     let uid=await User.findById({_id:userId});
 
@@ -24,7 +28,12 @@ async function createProfile(req,res){
 
 
     }else{
-        let profile=await Profile.findByIdAndUpdate({_id:uid.additionalDetails},{contactNumber,about,dateOfBirth,gender});
+
+      let id=uid.additionalDetails
+      
+
+
+        let profile=await Profile.findByIdAndUpdate({_id:id},{contactNumber,about,dateOfBirth,gender});
 
         res.status(200).json({
             success:true,
@@ -39,10 +48,11 @@ async function createProfile(req,res){
     })
     
   } catch (error) {
+    console.log(error)
 
     res.status(401).json({
         success:false,
-        message:"PROFILE CREATION/UPDATION SUCESSFULLY"
+        message:"PROFILE CREATION/UPDATION Failed"
     })
 
 
@@ -61,4 +71,29 @@ async function createProfile(req,res){
 
 }
 
-module.exports={createProfile}
+async function updateUser(req,res){
+  try {
+    const{dp}=req.files;
+    const {id}=req.user
+    
+    let newdp=await fileupload(dp)
+
+    const newUser=await User.findByIdAndUpdate({_id:id},{image:newdp.secure_url});
+
+    res.status(200).json({
+      success:true,
+      message:"PROFILEPIC UPDATED SUCESS FULLY",
+      url:newdp.secure_url
+    })
+    
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({
+      success:true,
+      message:"PROFILEPIC UPDATED FAILED"
+    })
+    
+  }
+}
+
+module.exports={createProfile,updateUser}

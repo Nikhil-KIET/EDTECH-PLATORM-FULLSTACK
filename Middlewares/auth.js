@@ -1,5 +1,6 @@
 
 const jwt=require("jsonwebtoken")
+require("cookie-parser")
 
 require("dotenv").config()
 
@@ -7,9 +8,12 @@ require("dotenv").config()
 //auth
 
 
-async function auth(req,res){
+async function auth(req,res,next){
     try {
-        const token =res.cokkie || res.body.token
+        const token = req.cookies.cook;
+        console.log(token)
+       
+
 
         if(!token){
             res.status(400).json({
@@ -19,12 +23,14 @@ async function auth(req,res){
         }
 
         const decode=jwt.verify(token,process.env.JWT_SECREAT)
+        console.log(decode)
         req.user=decode
 
         next();
 
         
     } catch (error) {
+        console.log(error)
         res.status(400).json({
             success:false,
             message:"token verification failed "
