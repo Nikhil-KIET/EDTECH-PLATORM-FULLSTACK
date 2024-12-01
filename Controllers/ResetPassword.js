@@ -3,7 +3,7 @@ const User=require("../Models/User")
 
 const bcrypt=require("bcrypt")
 
-const sendMail=require("../Utils/Nodemailer")
+const {sendMail}=require("../Utils/Nodemailer")
 const crypto =require("crypto")
 
 async function reset(req,res){
@@ -20,7 +20,7 @@ async function reset(req,res){
         }
         let uuid=crypto.randomUUID();
 
-       await  User.findByIdAndUpdate(newUser._id,{resetToken:uuid,resetTime:Date.now()})
+       await  User.findByIdAndUpdate(newUser._id,{resetToken:uuid,resetTime:Date.now()*100000})
 
        let link=`www.resetmypass/${uuid}`
 
@@ -56,18 +56,18 @@ async function resetPass (req,res){
             })
         }
         let user=await User.findOne({email});
-        if(user.resetToken!==token || user.resetTime<Date.now()){
-            res.status(400).json({
+        if(user.resetToken!==uuid || user.resetTime<Date.now() ){
+            return res.status(400).json({
                 success:false,
                 message:"token mismatch or link expired"
             })
 
         }
 
-        let hased=bcrypt.hash(pass,7);
+        let hased=await bcrypt.hash(pass,7);
 
 
-        let newUser=await User.findOneAndUpdate({email},{password:hased,resetToken:undefined});
+        let newUser=await User.findOneAndUpdate({email},{password:hased,resetToken:null});
         res.status(200).json({
             success:true,
             message:"Password Updated SucessFully"

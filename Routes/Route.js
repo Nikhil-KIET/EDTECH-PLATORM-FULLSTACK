@@ -2,7 +2,7 @@ const express=require("express");
 const { login, signup, changePass, sendOtp } = require("../Controllers/Auth");
 const {createCourse,getCourses,getDetails } = require("../Controllers/Course");
 const { createPay, verifySign } = require("../Controllers/CreatePay");
-const { reset } = require("../Controllers/ResetPassword");
+const { reset, resetPass } = require("../Controllers/ResetPassword");
 const { createProfile, updateUser } = require("../Controllers/Profile");
 const { createRating, avgRating } = require("../Controllers/Rating");
 const { createSection, updateSection, deleteSection } = require("../Controllers/Section");
@@ -40,6 +40,7 @@ router.post("/createTag",createTag)//chk
 router.get("/getTag",getAllTags)
 router.get("/sendOtp",sendOtp)
 router.put("/updatePic",auth,updateUser)
+router.put("/updatePass",resetPass)
 
 
 module.exports=router
