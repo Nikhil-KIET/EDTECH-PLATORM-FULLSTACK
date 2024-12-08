@@ -43,7 +43,7 @@ async function auth(req,res,next){
 
 //istsudent 
 
-async function isStudent(req,res){
+async function isStudent(req,res,next){
     try {
         const {user}=req.body;
         if(!user){
@@ -75,17 +75,17 @@ async function isStudent(req,res){
 
 //isInstructor
 
-async function isInstructor(req,res){
+async function isInstructor(req,res,next){
     try {
-        const {user}=req.body;
+        const user=req.user;
         if(!user){
-            res.status(400).json({
+          return   res.status(400).json({
                 success:false,
                 message:"user not found in req body"
             })
         }
-        if(user.accountType!=="Instructor"){
-            res.status(400).json({
+        if(user.raccountType!=="Instructor"){
+         return   res.status(400).json({
                 success:false,
                 message:"This isprotected rounteonly for Instructor"
             })
@@ -94,7 +94,7 @@ async function isInstructor(req,res){
         
     } catch (error) {
 
-        res.status(400).json({
+       return  res.status(400).json({
             success:false,
             message:"Error occured while accesing Instructor route"
         })
@@ -105,17 +105,18 @@ async function isInstructor(req,res){
 
 //isadmin
 
-async function isAdmin(req,res){
+async function isAdmin(req,res,next){
     try {
-        const {user}=req.body;
+        const user=req.user;
         if(!user){
-            res.status(400).json({
+        return     res.status(400).json({
                 success:false,
                 message:"user not found in req body"
             })
         }
-        if(user.accountType!=="Admin"){
-            res.status(400).json({
+        console.log(user)
+        if(user.raccountType!=="Admin"){
+          return   res.status(400).json({
                 success:false,
                 message:"This isprotected rounteonly for Admin"
             })
@@ -124,7 +125,7 @@ async function isAdmin(req,res){
         
     } catch (error) {
 
-        res.status(400).json({
+       return  res.status(400).json({
             success:false,
             message:"Error occured while accesing Admin route"
         })

@@ -9,9 +9,9 @@ const uploadFiles=require("../Utils/Cloudinary")
 async function createCourse(req,res){
     try {
 
-        const {courseName,courseDesc,whatYouWillLearn,price}=req.body
+        const {courseName,courseDesc,whatYouWillLearn,price,tag}=req.body
 
-        const {thumbnail}=req.files.thumbnail
+        const {thumbnail}=req.files
 
         if(!courseName|| !courseDesc || !whatYouWillLearn || !price){
             res.status(400).json({
@@ -30,14 +30,14 @@ async function createCourse(req,res){
                 mesage:"the given tag is invalid "
             })
         }
-        let userId=re.user._id
+        let userId=req.user.id
         let newCourse=await Course.create({courseName,courseDesc,whatYouWillLearn,price,instructor:userId,thumbnail:imgUrl.secure_url})
 
         
 
-        await User.findByIdAndUpdate({userId},{$push:{courses:newCourse._id}})
+        await User.findByIdAndUpdate({_id:userId},{$push:{courses:newCourse._id}})
 
-        await Tag.findByIdAndUpdate({tag},{$push:{course:newCourse._id}})
+        await Tag.findByIdAndUpdate({_id:tag},{$push:{course:newCourse._id}})
 
 
 

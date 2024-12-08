@@ -8,7 +8,7 @@ const { createRating, avgRating } = require("../Controllers/Rating");
 const { createSection, updateSection, deleteSection } = require("../Controllers/Section");
 const { createSubsection, updateSubsection, deleteSubsection } = require("../Controllers/SubSection");
 const { createTag, getAllTags } = require("../Controllers/Tag");
-const { auth } = require("../Middlewares/auth");
+const { auth, isAdmin, isInstructor } = require("../Middlewares/auth");
 
 
 //debugging if any of the function giving undefined
@@ -18,16 +18,16 @@ const router=express.Router();
 
 
 
-router.get("/login",login)
-router.post("/signup",signup)//chk
-router.post("/createCourse",createCourse)//chk
+router.get("/login",login)//ckg//tst
+router.post("/signup",signup)//chk//tst
+router.post("/createCourse",auth,isInstructor,createCourse)//chk//tst
 router.get("/getCourses",getCourses)
 router.get("/courseDetails",getDetails)
 router.post("/buyCourse",createPay)//chk
 router.get("/checkSign",verifySign)//chk
 router.put("/changePass",changePass)
-router.get("/resetPass",reset)
-router.post("/createProfile",auth,createProfile)//chk
+router.get("/resetPass",reset)//chk//tst
+router.post("/createProfile",auth,createProfile)//chk//tst
 router.post("/createRating",createRating)//chk
 router.get("/avgRating",avgRating)
 router.post("/createSection",createSection)//chk
@@ -36,10 +36,10 @@ router.delete("/deleteSection",deleteSection)
 router.post("/createSubs",createSubsection)//chk
 router.put("/updateSubs",updateSubsection)
 router.delete("/deleteSubs",deleteSubsection)
-router.post("/createTag",createTag)//chk
-router.get("/getTag",getAllTags)
-router.get("/sendOtp",sendOtp)
-router.put("/updatePic",auth,updateUser)
+router.post("/createTag",auth,isAdmin,createTag)//chk//tst
+router.get("/getTag",getAllTags)//chk//tst
+router.get("/sendOtp",sendOtp)//chk//tst
+router.put("/updatePic",auth,updateUser)//chk//tst
 router.put("/updatePass",resetPass)
 
 

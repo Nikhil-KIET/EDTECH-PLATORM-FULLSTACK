@@ -91,7 +91,7 @@ async function signup(req,res){
         console.log(email)
 
     let newOtp=await Otp.find({email}).sort({createdAt:-1}).limit(1);
-    console.log(newOtp[0].otp)
+    console.log(newOtp)
 
     if( newOtp.length<=0 ||newOtp[0].otp!==otp ){
         res.status(400).json({

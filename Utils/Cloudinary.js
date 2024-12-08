@@ -12,7 +12,7 @@ async function uploadFiles(file){
         })
         
     } catch (error) {
-        console.log(err)
+        console.log(error)
         
     }
 

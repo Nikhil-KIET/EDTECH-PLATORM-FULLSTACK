@@ -9,15 +9,17 @@ const cloudinaryconfig=require("./Config/cloudinaryconfig")
 
 
 const app=express();
-app.use(express.json())
-app.use(cookieParser())
 app.use(upload({
     useTempFiles : true,
     tempFileDir : '/tmp/'
 }));
+app.use(express.json())
+app.use(cookieParser())
+
 
 dbconnect()
 cloudinaryconfig()
+
 app.use(cors({
     origin:"http://localhost:3000",
     credentials:true

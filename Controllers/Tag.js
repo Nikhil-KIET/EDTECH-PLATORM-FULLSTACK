@@ -7,14 +7,14 @@ async function createTag(req,res){
         const {name,desc}=req.body
 
         if(!name || !desc){
-            res.status(400).json({
+          return  res.status(400).json({
                 success:false,
                 message:"All files are required"
             })
         }
 
         let newTag=await tag.create({name,desc});
-        res.status(200).json({
+       return res.status(200).json({
             success:true,
             message:"Tag creaeted Sucessfully"
         })
@@ -27,7 +27,7 @@ async function createTag(req,res){
     } catch (error) {
         console.log(error)
 
-        res.status(400).json({
+       return res.status(400).json({
             success:false,
             message:"TAG CREATION FAILED"
         })
