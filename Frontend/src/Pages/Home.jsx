@@ -31,7 +31,7 @@ export default function Home() {
         <div className=" w-11/12 flex flex-col gap-[38px] mt-5  items-center">
             {/* section1 */}
 
-            <div className=" cursor-pointer shadow-bottom  bg-[#161D29] text-pure-greys-300 flex flex-row items-center p-[4px] gap-[5px]  justify-center h-[44px] rounded-[500px] shadow-white  transition-all duration-100 hover:scale-95  border-[0.1px]  ">
+            <div className=" cursor-pointer shadow-bottom  bg-[#161D29] text-pure-greys-300 flex flex-row items-center p-[6px] px-7 gap-[5px]  justify-center h-[44px] rounded-[500px] shadow-white  transition-all duration-100 hover:scale-95  border-[0.1px]  ">
                 <p>Become an Instructor</p>
                 <FaArrowRightLong />
 
