@@ -5,11 +5,16 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import frame from "../assets/Images/frame.png"
 import Cta from "../Components/CtaBtn";
+import { Link } from "react-router-dom";
+import { loginS } from "../Services/opeartions/auth";
+import { useDispatch } from "react-redux";
 export default function Login() {
 
-    const [formdata, setFormData] = useState({ email: "", pass: "" })
+    const [formdata, setFormData] = useState({ email: "", pass: "" ,})
 
     const [hide, setHide] = useState(true)
+
+    const dispatch=useDispatch()
 
 
     function chnageHandler(e) {
@@ -30,7 +35,11 @@ export default function Login() {
                         <h1 className="text-richblack-5 text-4xl font-semibold ">Welcome Back</h1>
                         <p className="text-richblack-400 text-lg">Build skills for today, tomorrow, and beyond.<span className="font-edu-sa font-bold italic text-blue-100">Education to future-proof your career</span> </p>
 
-                        <form onSubmit={""} className="flex flex-col gap-5   " >
+                        <form onSubmit={(e)=>{
+                            e.preventDefault()
+                           dispatch(loginS(formdata))
+                            
+                        }} className="flex flex-col gap-5   " >
 
                             <label className="text-richblack-5" htmlFor="email">Email Address</label>
 
@@ -41,22 +50,33 @@ export default function Login() {
 
                             <label className="text-richblack-5" htmlFor="pass">Password
                             </label>
-                            <div style={{
-                                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                            }}
-                                className="w-full flex gap-3 justify-between  items-center  rounded-[0.5rem] bg-richblack-800  text-richblack-5">
+                            <div className=" flex flex-col">
+                                <div style={{
+                                    boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+                                }}
+                                    className="w-full flex gap-3 justify-between  items-center  rounded-[0.5rem] bg-richblack-800  text-richblack-5">
 
-                                <input className="bg-transparent w-full p-[12px] rounded-[0.5rem] " value={formdata.pass} type={`${hide ? "password" : "text"}`} placeholder="Enter Your Password" name="pass" id="pass" onChange={chnageHandler} />
+                                    <input className="bg-transparent w-full p-[12px] rounded-[0.5rem] " value={formdata.pass} type={`${hide ? "password" : "text"}`} placeholder="Enter Your Password" name="pass" id="pass" onChange={chnageHandler} />
 
-                                {
-                                    hide ? (<  FaEyeSlash color={"white"} onClick={() => {
-                                        setHide(!hide)
-                                    }} />) : (<FaEye color={"white"} onClick={() => {
-                                        setHide(!hide)
-                                    }} />)
-                                }
+                                    {
+                                        hide ? (<  FaEyeSlash color={"white"} onClick={() => {
+                                            setHide(!hide)
+                                        }} />) : (<FaEye color={"white"} onClick={() => {
+                                            setHide(!hide)
+                                        }} />)
+                                    }
+
+
+                                </div>
+                                
+                                <div className="font-edu-sa font-bold italic text-blue-100 self-end ">
+                                <Link to={"/reset"}>
+                                    Forgot Password
+                                    </Link>
+                                </div>
 
                             </div>
+
 
                             <button className="bg-yellow-50 text-black  h-[48px] rounded-lg gap-2 flex justify-center items-center p-2    " type="submit"> Sign In</button>
 

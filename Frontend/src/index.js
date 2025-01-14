@@ -5,6 +5,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -17,6 +18,7 @@ root.render(
 
     <App />
     </BrowserRouter>
+    <Toaster/>
     </Provider>
     
 

@@ -25,7 +25,7 @@ export default function Navbar(){
     }
     
     return (
-        <div className="w-screen flex  justify-center items-center  border-b-[0.01px] border-richblack-600 p-3  ">
+        <div className="w-screen flex  justify-center items-center  border-b-[0.01px] border-richblack-600 p-3   ">
 
             <div className=" flex w-[73%] justify-between items-center ">
 
@@ -59,7 +59,7 @@ export default function Navbar(){
             <div className=" flex items-center">
 
                 {
-                    isloggedin ? (<div className=" text-white flex items-center gap-5"> <Link><div>Dashboard</div></Link> <Link><div>Profile</div></Link>  </div>): (<div className=" text-white flex items-center gap-5" > <Link onClick={handler} ><div>Log in</div></Link>
+                    isloggedin ? (<div className=" text-white flex items-center gap-5"> <Link to={"/settings"}><div>Dashboard</div></Link> <Link to={"/profile"}><div>Profile</div></Link>  </div>): (<div className=" text-white flex items-center gap-5" > <Link onClick={handler} ><div>Log in</div></Link>
 
                     <Link><div>Sign up</div></Link> </div>)
                 }
